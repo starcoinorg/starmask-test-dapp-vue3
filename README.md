@@ -9,5 +9,5 @@ Read `vite.config.ts` and [node-modules-polyfill Config](https://github.com/remo
 ## How to run
 
 1. `npm install`
-3. `npm run dev`
-4. open `localhost:3000`
+2. `npm run dev`
+3. open `localhost:3000`

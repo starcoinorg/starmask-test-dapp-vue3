@@ -1,29 +1,27 @@
 // stores/counter.js
-import { defineStore } from 'pinia';
-import StarMaskOnboarding from '../../node_modules/@starcoin/starmask-onboarding/dist/starmask-onboarding.es';
-import { providers, utils, bcs, encoding } from '@starcoin/starcoin';
+import { defineStore } from "pinia";
+import StarMaskOnboarding from "../../node_modules/@starcoin/starmask-onboarding/dist/starmask-onboarding.es";
 
 const initialStarCoin = () => {
   const currentUrl = new URL(window.location.href);
   const forwarderOrigin =
-    currentUrl.hostname === 'localhost' ? 'http://localhost:9032' : undefined;
+    currentUrl.hostname === "localhost" ? "http://localhost:9032" : undefined;
 
   const isStarMaskInstalled = StarMaskOnboarding.isStarMaskInstalled();
   const isStarMaskConnected = false;
   const accounts = [];
-  
+
   let onboarding;
   try {
     onboarding = new StarMaskOnboarding({ forwarderOrigin });
-  }
-  catch (error) {
-    console.error(error)
+  } catch (error) {
+    console.error(error);
   }
 
   let chainInfo = {
-    chain: '',
-    network: '',
-    accounts: ''
+    chain: "",
+    network: "",
+    accounts: "",
   };
 
   return {
@@ -31,20 +29,16 @@ const initialStarCoin = () => {
     isStarMaskConnected,
     accounts,
     onboarding,
-    // starcoinProvider,
-    chainInfo
+    chainInfo,
   };
 };
 
-
 const initial = initialStarCoin();
 
-export const useStarcoinStore = defineStore('starcoin', {
+export const useStarcoinStore = defineStore("starcoin", {
   state: () => {
     return { ...initial };
   },
-  // could also be defined as
-  // state: () => ({ count: 0 })
   actions: {
     changeStarcoinStore(data) {
       this.starcoin = data;
