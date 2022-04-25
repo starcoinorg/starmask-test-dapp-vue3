@@ -9,17 +9,23 @@
   },
   "dependencies": {
     "@starcoin/starcoin": "^2.0.0",
+    "bignumber.js": "^9.0.2",
     "bowser": "^2.11.0",
+    "element-plus": "^2.1.10",
+    "less": "^4.1.2",
+    "pinia": "^2.0.13",
     "safe-buffer": "^5.2.1",
     "vue": "^3.2.25"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-    "@starcoin/starmask-onboarding": "^1.0.0",
+    "@starcoin/starmask-onboarding": "^1.1.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "^4.5.4",
+    "unplugin-auto-import": "^0.7.1",
+    "unplugin-vue-components": "^0.19.3",
     "vite": "^2.9.5",
     "vue-tsc": "^0.34.7"
   }
