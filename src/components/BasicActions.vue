@@ -8,7 +8,6 @@ const disabled = ref(false);
 const showSelectedAccount = ref(false);
 
 const status = computed(() => {
-  console.log(starCoinStore, "status");
   if (!starCoinStore.isStarMaskInstalled) {
     disabled.value = false;
     return 0;
@@ -38,8 +37,6 @@ const clickHandle = async () => {
       console.error(error);
     }
   }
-
-  console.log(status, "status");
 };
 
 const getAccount = () => {
