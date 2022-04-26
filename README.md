@@ -2,7 +2,7 @@
 
 Use
 
-- [vite-polyfill-node-kit](vite-polyfill-node-kit)
+- [vite-polyfill-node-kit](https://github.com/kkkycocho/vite-polyfill-node-kit)
 
 Read `vite.config.ts` and [node-modules-polyfill Config](https://github.com/remorses/esbuild-plugins/blob/master/node-modules-polyfill/src/polyfills.ts)
 
