@@ -20,7 +20,7 @@
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-    "@starcoin/starmask-onboarding": "^1.1.0",
+    "@starcoin/starmask-onboarding": "^1.2.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "^4.5.4",

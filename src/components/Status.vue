@@ -1,22 +1,22 @@
 <script setup>
-import { computed } from "vue";
-import { useStarcoinStore } from "@/stores/starcoin";
+import { computed } from 'vue'
+import { useStarcoinStore } from '@/stores/starcoin'
 
-const starcoinStore = useStarcoinStore();
+const starcoinStore = useStarcoinStore()
 const statusDefined = computed(() => [
   {
-    key: "Network",
+    key: 'Network',
     value: starcoinStore.chainInfo.network,
   },
   {
-    key: "ChainId",
+    key: 'ChainId',
     value: starcoinStore.chainInfo.chain,
   },
   {
-    key: "SelectedAccount",
+    key: 'SelectedAccount',
     value: starcoinStore.accounts,
   },
-]);
+])
 </script>
 <!--  -->
 <template>
@@ -28,7 +28,11 @@ const statusDefined = computed(() => [
         class="status-main-item"
         v-for="(item, index) of statusDefined"
       >
-        <el-alert :title="`${item.key}: ${item.value}`" type="success" />
+        <el-alert
+          :closable="false"
+          :title="`${item.key}: ${item.value}`"
+          type="success"
+        />
       </div>
     </div>
   </div>

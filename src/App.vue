@@ -1,58 +1,58 @@
 <script setup lang="ts">
-import { useStarcoinStore } from "@/stores/starcoin";
-import Status from "./components/Status.vue";
-import BasicActions from "./components/BasicActions.vue";
-import PermissionsActions from "./components/PermissionsActions.vue";
-import SendSTC from "./components/SendSTC.vue";
+import { useStarcoinStore } from '@/stores/starcoin'
+import Status from './components/Status.vue'
+import BasicActions from './components/BasicActions.vue'
+import PermissionsActions from './components/PermissionsActions.vue'
+import SendSTC from './components/SendSTC.vue'
 
-const starCoinStore = useStarcoinStore();
+const starCoinStore = useStarcoinStore()
 
 const onStarcoinEvent = () => {
   if (starCoinStore.isStarMaskInstalled) {
     const handleNewChain = (chain) => {
-      starCoinStore.changeChain(chain);
-    };
+      starCoinStore.changeChain(chain)
+    }
 
     const handleNewNetwork = (network) => {
-      starCoinStore.changeNetwork(network);
-    };
+      starCoinStore.changeNetwork(network)
+    }
 
     const handleNewAccounts = (accounts) => {
-      starCoinStore.changeAccounts(accounts);
-    };
+      starCoinStore.changeAccounts(accounts)
+    }
 
     // 钱包网络切换
-    window.starcoin.on("chainChanged", handleNewChain);
-    window.starcoin.on("networkChanged", handleNewNetwork);
+    window.starcoin.on('chainChanged', handleNewChain)
+    window.starcoin.on('networkChanged', handleNewNetwork)
 
     // 钱包帐号切换
-    window.starcoin.on("accountsChanged", handleNewAccounts);
+    window.starcoin.on('accountsChanged', handleNewAccounts)
   }
-};
+}
 
 const initialChaiInfo = async () => {
   if (starCoinStore.isStarMaskInstalled) {
     const chainInfo = await window.starcoin.request({
-      method: "chain.id",
-    });
+      method: 'chain.id',
+    })
 
-    starCoinStore.changeChain(`0x${chainInfo.id.toString(16)}`);
-    starCoinStore.changeNetwork(chainInfo.id);
+    starCoinStore.changeChain(`0x${chainInfo.id.toString(16)}`)
+    starCoinStore.changeNetwork(chainInfo.id)
   }
-};
+}
 
 const initialAccount = async () => {
   if (window?.starcoin.isConnected) {
     const newAccounts = await window.starcoin.request({
-      method: "stc_accounts",
-    });
-    starCoinStore.changeAccounts(newAccounts);
+      method: 'stc_accounts',
+    })
+    starCoinStore.changeAccounts(newAccounts)
   }
-};
+}
 
-onStarcoinEvent();
-initialChaiInfo();
-initialAccount();
+onStarcoinEvent()
+initialChaiInfo()
+initialAccount()
 </script>
 
 <template>
@@ -63,12 +63,16 @@ initialAccount();
     src="https://starmask-test-dapp.starcoin.org/logo-horizontal.png"
   />
   <Status />
-  <BasicActions />
-  <PermissionsActions />
-  <SendSTC />
+  <el-row justify="space-around" type="flex" class="content-wrap">
+    <BasicActions />
+    <PermissionsActions />
+    <SendSTC />
+  </el-row>
 </template>
 
-<style>
+<style lang="less">
+@import './global.styles.less';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -81,5 +85,9 @@ initialAccount();
 .logo {
   width: 317px;
   height: 143px;
+}
+
+.content-wrap {
+  width: 100%;
 }
 </style>

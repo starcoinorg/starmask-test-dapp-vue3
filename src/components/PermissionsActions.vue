@@ -1,41 +1,40 @@
 <script setup>
-import { ref } from "vue";
-import { useStarcoinStore } from "@/stores/starcoin";
+import { ref } from 'vue'
+import { useStarcoinStore } from '@/stores/starcoin'
 
-const permissionsResult = ref("");
+const permissionsResult = ref('')
 
-const starCoinStore = useStarcoinStore();
+const starCoinStore = useStarcoinStore()
 const getPermissionsDisplayString = (permissionsArray) => {
   if (permissionsArray.length === 0) {
-    return "No permissions found.";
+    return 'No permissions found.'
   }
 
-  const permissionNames = permissionsArray.map((perm) => perm.parentCapability);
+  const permissionNames = permissionsArray.map((perm) => perm.parentCapability)
   return permissionNames
-    .reduce((acc, name) => `${acc}${name}, `, "")
-    .replace(/, $/u, "");
-};
+    .reduce((acc, name) => `${acc}${name}, `, '')
+    .replace(/, $/u, '')
+}
 
 const reqPermissions = async () => {
   const permissionsArray = await window.starcoin.request({
-    method: "wallet_requestPermissions",
+    method: 'wallet_requestPermissions',
     params: [{ stc_accounts: {} }],
-  });
+  })
 
-  permissionsResult.value = getPermissionsDisplayString(permissionsArray);
-};
+  permissionsResult.value = getPermissionsDisplayString(permissionsArray)
+}
 
 const getPermissions = async () => {
   const permissionsArray = await window.starcoin.request({
-    method: "wallet_getPermissions",
-  });
+    method: 'wallet_getPermissions',
+  })
 
-  permissionsResult.value = getPermissionsDisplayString(permissionsArray);
-};
+  permissionsResult.value = getPermissionsDisplayString(permissionsArray)
+}
 </script>
-<!--  -->
 <template>
-  <div>
+  <div class="card-wrap">
     <el-card>
       <h3>Permissions Actions</h3>
       <el-button

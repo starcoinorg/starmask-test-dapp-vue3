@@ -1,51 +1,51 @@
 <script setup>
-import { ref, computed } from "vue";
-import { useStarcoinStore } from "@/stores/starcoin";
+import { ref, computed } from 'vue'
+import { useStarcoinStore } from '@/stores/starcoin'
 
-const starCoinStore = useStarcoinStore();
-const textStatus = ["Click here to install StarMask!", "Connect", "Connected"];
-const disabled = ref(false);
-const showSelectedAccount = ref(false);
+const starCoinStore = useStarcoinStore()
+const textStatus = ['Click here to install StarMask!', 'Connect', 'Connected']
+const disabled = ref(false)
+const showSelectedAccount = ref(false)
 
 const status = computed(() => {
   if (!starCoinStore.isStarMaskInstalled) {
-    disabled.value = false;
-    return 0;
+    disabled.value = false
+    return 0
   } else if (starCoinStore.isStarMaskConnected) {
-    disabled.value = true;
-    starCoinStore.onboarding?.stopOnboarding();
-    return 2;
+    disabled.value = true
+    starCoinStore.onboarding?.stopOnboarding()
+    return 2
   } else {
-    disabled.value = false;
-    return 1;
+    disabled.value = false
+    return 1
   }
-});
+})
 
 const clickHandle = async () => {
-  const _status = status.value;
+  const _status = status.value
 
   if (_status === 0) {
-    disabled.value = true;
-    starCoinStore.onboarding.startOnboarding();
+    disabled.value = true
+    starCoinStore.onboarding.startOnboarding()
   } else if (_status === 1) {
     try {
       const newAccounts = await window.starcoin.request({
-        method: "stc_requestAccounts",
-      });
-      starCoinStore.changeAccounts(newAccounts);
+        method: 'stc_requestAccounts',
+      })
+      starCoinStore.changeAccounts(newAccounts)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
-};
+}
 
 const getAccount = () => {
-  showSelectedAccount.value = true;
-};
+  showSelectedAccount.value = true
+}
 </script>
 <!--  -->
 <template>
-  <div>
+  <div class="card-wrap">
     <el-card>
       <h3>Basic Actions</h3>
       <el-button type="primary" :disabled="disabled" @click="clickHandle">
@@ -56,7 +56,7 @@ const getAccount = () => {
       </el-button>
       <el-button type="info" disabled>
         SelectedAccount:
-        {{ showSelectedAccount ? starCoinStore.accounts[0] : "" }}
+        {{ showSelectedAccount ? starCoinStore.accounts[0] : '' }}
       </el-button>
     </el-card>
   </div>

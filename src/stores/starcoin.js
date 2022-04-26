@@ -1,28 +1,28 @@
 // stores/counter.js
-import { defineStore } from "pinia";
-import StarMaskOnboarding from "../../node_modules/@starcoin/starmask-onboarding/dist/starmask-onboarding.es";
+import { defineStore } from 'pinia'
+import StarMaskOnboarding from '../../node_modules/@starcoin/starmask-onboarding/dist/starmask-onboarding.es'
 
 const initialStarCoin = () => {
-  const currentUrl = new URL(window.location.href);
+  const currentUrl = new URL(window.location.href)
   const forwarderOrigin =
-    currentUrl.hostname === "localhost" ? "http://localhost:9032" : undefined;
+    currentUrl.hostname === 'localhost' ? 'http://localhost:9032' : undefined
 
-  const isStarMaskInstalled = StarMaskOnboarding.isStarMaskInstalled();
-  const isStarMaskConnected = false;
-  const accounts = [];
+  const isStarMaskInstalled = StarMaskOnboarding.isStarMaskInstalled()
+  const isStarMaskConnected = false
+  const accounts = []
 
-  let onboarding;
+  let onboarding
   try {
-    onboarding = new StarMaskOnboarding({ forwarderOrigin });
+    onboarding = new StarMaskOnboarding({ forwarderOrigin })
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 
   let chainInfo = {
-    chain: "",
-    network: "",
-    accounts: "",
-  };
+    chain: '',
+    network: '',
+    accounts: '',
+  }
 
   return {
     isStarMaskInstalled,
@@ -30,28 +30,28 @@ const initialStarCoin = () => {
     accounts,
     onboarding,
     chainInfo,
-  };
-};
+  }
+}
 
-const initial = initialStarCoin();
+const initial = initialStarCoin()
 
-export const useStarcoinStore = defineStore("starcoin", {
+export const useStarcoinStore = defineStore('starcoin', {
   state: () => {
-    return { ...initial };
+    return { ...initial }
   },
   actions: {
     changeStarcoinStore(data) {
-      this.starcoin = data;
+      this.starcoin = data
     },
     changeChain(chain) {
-      this.chainInfo.chain = chain;
+      this.chainInfo.chain = chain
     },
     changeNetwork(network) {
-      this.chainInfo.network = network;
+      this.chainInfo.network = network
     },
     changeAccounts(accounts) {
-      this.accounts = accounts;
-      this.isStarMaskConnected = this.accounts && this.accounts.length > 0;
+      this.accounts = accounts
+      this.isStarMaskConnected = this.accounts && this.accounts.length > 0
     },
   },
-});
+})
