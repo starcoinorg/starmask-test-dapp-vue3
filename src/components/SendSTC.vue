@@ -2,7 +2,15 @@
 import { ref } from 'vue'
 import { providers, utils, bcs } from '@starcoin/starcoin'
 import BigNumber from 'bignumber.js'
-import { arrayify, hexlify } from '@ethersproject/bytes'
+import { hexlify } from '@ethersproject/bytes'
+
+const nodeUrlMap = {
+  '1': 'https://main-seed.starcoin.org',
+  '2': 'https://proxima-seed.starcoin.org',
+  '251': 'https://barnard-seed.starcoin.org',
+  '253': 'https://halley-seed.starcoin.org',
+  '254': 'http://localhost:9850',
+}
 
 const toInputVal = ref('0x46ecE7c1e39fb6943059565E2621b312')
 const amountInputVal = ref('0.001')
@@ -16,7 +24,6 @@ const transferClick = async () => {
   try {
     const functionId = '0x1::TransferScripts::peer_to_peer_v2'
     const strTypeArgs = ['0x1::STC::STC']
-    const tyArgs = utils.tx.encodeStructTypeTags(strTypeArgs)
 
     const toAccount = toInputVal.value
     if (!toAccount) {
@@ -36,22 +43,16 @@ const transferClick = async () => {
     const sendAmountNanoSTC = sendAmountSTC.times(
       BIG_NUMBER_NANO_STC_MULTIPLIER
     )
-    const sendAmountHex = `0x${sendAmountNanoSTC.toString(16)}`
 
-    const amountSCSHex = (function () {
-      const se = new bcs.BcsSerializer()
-      // eslint-disable-next-line no-undef
-      se.serializeU128(BigInt(sendAmountNanoSTC.toString(10)))
-      return hexlify(se.getBytes())
-    })()
+    const args = [toAccount, sendAmountNanoSTC]
+    const nodeUrl = nodeUrlMap[window.starcoin.networkVersion]
 
-    const args = [arrayify(toAccount), arrayify(amountSCSHex)]
-
-    const scriptFunction = utils.tx.encodeScriptFunction(
+    const scriptFunction = await utils.tx.encodeScriptFunctionByResolve(
       functionId,
-      tyArgs,
-      args
-    )
+      strTypeArgs,
+      args,
+      nodeUrl
+    );
 
     // Multiple BcsSerializers should be used in different closures, otherwise, the latter will be contaminated by the former.
     const payloadInHex = (function () {
@@ -72,6 +73,7 @@ const transferClick = async () => {
     const transactionHash = await starcoinProvider
       .getSigner()
       .sendUncheckedTransaction(txParams)
+    console.log({ transactionHash })
   } catch (error) {
     contractStatus.value = 'Call Failed'
     throw error
